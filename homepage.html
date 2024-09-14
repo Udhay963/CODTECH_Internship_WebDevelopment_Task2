@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Organizer - Welcome</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap">
+    <style>
+        /* Global Styles */
+       /* Fixed Header Styles */
+header {
+    background: linear-gradient(135deg, #34495e, #2c3e50);
+    padding: 1rem 2rem; /* Adjusted padding to fit fixed header */
+    position: fixed; /* Fixed position */
+    top: 0; /* Align to the top of the viewport */
+    left: 0; /* Align to the left of the viewport */
+    width: 100%; /* Full width of the viewport */
+    z-index: 1000; /* Ensure it stays on top of other content */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+    transition: all 0.3s ease-in-out;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #1c1c1c;
+    color: #ecf0f1;
+    margin: 0;
+    padding-top: 60px; /* Add padding to body to offset header height */
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            padding: 0;
+            margin: 0;
+        }
+
+        nav ul li {
+            display: inline;
+        }
+
+        nav a {
+            color: #ecf0f1;
+            font-weight: bold;
+            text-transform: uppercase;
+            text-decoration: none;
+            font-size: 1.2rem;
+            padding: 0.5rem;
+            transition: all 0.3s ease-in-out;
+        }
+
+        nav a:hover {
+            color: #3498db;
+            text-shadow: 0 0 10px #3498db;
+            transform: scale(1.05);
+        }
+
+        .main-banner {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-image: url("https://png.pngtree.com/thumb_back/fh260/background/20230817/pngtree-healthy-foods-and-recipes-with-a-lot-of-food-around-them-image_13024903.jpg");
+            background-size: cover;
+            background-position: center;
+            color: #ecf0f1;
+            text-align: center;
+            padding: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .main-banner h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            text-shadow: 3px 6px 8px rgba(0, 0, 0, 0.7);
+        }
+
+        .main-banner p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            max-width: 800px;
+            text-shadow: 3px 6px 8px rgba(0, 0, 0, 0.7);
+        }
+
+        .main-banner .get-started-btn {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: #ecf0f1;
+            border: none;
+            border-radius: 25px;
+            padding: 1.25rem 2.5rem;
+            font-size: 1.75rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.5);
+            transition: all 0.3s ease-in-out;
+        }
+
+        .main-banner .get-started-btn:hover {
+            background: linear-gradient(135deg, #2980b9, #3498db);
+            transform: scale(1.1);
+            box-shadow: 0 16px 32px rgba(0, 0, 0, 0.7);
+        }
+
+        .introduction {
+            background-color: #2c3e50;
+            padding: 6rem 2rem;
+            text-align: center;
+            color: #ecf0f1;
+        }
+
+        .introduction h2 {
+            font-size: 3rem;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-weight: bold;
+            border-bottom: 4px solid #3498db;
+            display: inline-block;
+            padding-bottom: 0.5rem;
+        }
+
+        .introduction p {
+            font-size: 1.25rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .features {
+            background-color: #34495e;
+            padding: 6rem 2rem;
+            color: #ecf0f1;
+            text-align: center;
+        }
+
+        .features h2 {
+            font-size: 3rem;
+            margin-bottom: 4rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-weight: bold;
+            border-bottom: 4px solid #3498db;
+            display: inline-block;
+            padding-bottom: 0.5rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .features-item {
+            background-color: #2c3e50;
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+
+        .features-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 16px 32px rgba(0, 0, 0, 0.7);
+        }
+
+        .features-item h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #3498db;
+        }
+
+        .features-item p {
+            font-size: 1.125rem;
+            line-height: 1.6;
+        }
+
+        .gallery {
+            padding: 6rem 2rem;
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            text-align: center;
+        }
+
+        .gallery h2 {
+            font-size: 3rem;
+            margin-bottom: 4rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-weight: bold;
+            border-bottom: 4px solid #3498db;
+            display: inline-block;
+            padding-bottom: 0.5rem;
+        }
+
+        
+
+        .gallery-item img {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .gallery-item img:hover {
+            transform: scale(1.05);
+        }
+
+        .testimonials {
+            background-color: #34495e;
+            padding: 6rem 2rem;
+            color: #ecf0f1;
+        }
+
+        .testimonials h2 {
+            font-size: 3rem;
+            margin-bottom: 4rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-weight: bold;
+            border-bottom: 4px solid #3498db;
+            display: inline-block;
+            padding-bottom: 0.5rem;
+            text-align: center;
+        }
+
+        .testimonial-carousel {
+            display: flex;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .testimonial {
+            flex: 0 0 100%;
+            box-sizing: border-box;
+            padding: 2rem;
+            background-color: #2c3e50;
+            border-radius: 10px;
+            margin: 0 auto;
+            text-align: center;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .testimonial h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #3498db;
+        }
+
+        .testimonial p {
+            font-size: 1.125rem;
+            line-height: 1.6;
+        }
+
+        .blog {
+            padding: 6rem 2rem;
+            background-color: #34495e;
+            color: #ecf0f1;
+            text-align: center;
+        }
+
+        .blog h2 {
+            font-size: 3rem;
+            margin-bottom: 4rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-weight: bold;
+            border-bottom: 4px solid #3498db;
+            display: inline-block;
+            padding-bottom: 0.5rem;
+        }
+
+        .blog-posts {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .blog-post {
+            background-color: #2c3e50;
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+
+        .blog-post:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 16px 32px rgba(0, 0, 0, 0.7);
+        }
+
+        .blog-post h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #3498db;
+        }
+
+        .blog-post p {
+            font-size: 1.125rem;
+            line-height: 1.6;
+        }
+
+        footer {
+            background-color: #2c3e50;
+            padding: 2rem;
+            text-align: center;
+            color: #ecf0f1;
+        }
+
+        footer p {
+            margin: 0;
+        }
+
+        footer a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+        .get-started-btn {
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    color: #ecf0f1;
+    border: none;
+    border-radius: 25px;
+    padding: 1.25rem 2.5rem;
+    font-size: 1.75rem;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.5);
+    transition: all 0.3s ease-in-out;
+    text-decoration: none; /* Remove underline */
+    display: inline-block; /* Make it behave like a button */
+}
+
+.get-started-btn:hover {
+    background: linear-gradient(135deg, #2980b9, #3498db);
+    transform: scale(1.1);
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.7);
+}
+
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#gallery">Gallery</a></li>
+                <li><a href="#blog">Blog</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Banner -->
+   <!-- Main Banner -->
+<section id="home" class="main-banner">
+    <div>
+        <h1>Welcome to the Recipe Organizer</h1>
+        <p>Discover, organize, and manage your favorite recipes effortlessly.</p>
+        <a href="index2.html" class="get-started-btn">Get Started</a>
+    </div>
+</section>
+
+
+    <!-- Introduction -->
+    <section id="about" class="introduction">
+        <h2>About</h2>
+        <p>Welcome to the Recipe Organizer, your ultimate solution for organizing and managing your recipes. Whether you’re a home cook or a professional chef, our tool helps you keep track of your recipes, ingredients, and cooking techniques with ease.</p>
+    </section>
+
+    <!-- Features -->
+    <section id="features" class="features">
+        <h2>Features</h2>
+        <div class="features-grid">
+            <div class="features-item">
+                <h3>Categorize Recipes</h3>
+                <p>Easily organize your recipes into categories like Breakfast, Lunch, Dinner, and Desserts. Never lose track of your favorite meals.</p>
+            </div>
+            <div class="features-item">
+                <h3>Add Notes</h3>
+                <p>Personalize your recipes with notes for future reference. Record your tweaks and special ingredients.</p>
+            </div>
+            <div class="features-item">
+                <h3>Edit & Delete Recipes</h3>
+                <p>Update or remove recipes with ease. Keep your collection up-to-date with your evolving taste preferences.</p>
+            </div>
+            <div class="features-item">
+                <h3>Search & Filter</h3>
+                <p>Quickly find the recipe you’re looking for with search and filter options. Perfect for when you’re in a hurry.</p>
+            </div>
+            <div class="features-item">
+                <h3>Responsive Design</h3>
+                <p>Access your recipe organizer on any device. Our responsive design ensures a seamless experience on mobile, tablet, or desktop.</p>
+            </div>
+            <div class="features-item">
+                <h3>Secure & Private</h3>
+                <p>Your recipes are stored locally, ensuring your culinary secrets remain yours alone.</p>
+            </div>
+        </div>
+    </section>
+    
+
+    <!-- Gallery -->
+    <section id="gallery" class="gallery">
+        <h2>Gallery</h2>
+        <div class="gallery-grid">
+            <div class="gallery-item"><img src="https://www.freewebheaders.com/wp-content/gallery/food-beverage-size-800x200/cache/various-spices-and-herbs-website-banner_size-800x200.jpg-nggid047753-ngg0dyn-800x200x100-00f0w010c010r110f110r010t010.jpg" alt="Recipe Image 1"></div>
+            <div class="gallery-item"><img src="https://www.freewebheaders.com/wp-content/gallery/food-beverage-size-800x200/cache/italian-foods-website-banner-image_size-800x200.jpg-nggid047750-ngg0dyn-800x200x100-00f0w010c010r110f110r010t010.jpg" alt="Recipe Image 2"></div>
+            <div class="gallery-item"><img src="https://www.freewebheaders.com/wp-content/gallery/food-beverage-size-800x200/cache/food-dishes-banner_size-800x200.jpg-nggid047744-ngg0dyn-800x200x100-00f0w010c010r110f110r010t010.jpg" alt="Recipe Image 3"></div>
+            <div class="gallery-item"><img src="https://www.freewebheaders.com/wp-content/gallery/food-beverage-size-800x200/cache/strawberry-juice-cocktail-glass-and-dessert-website-banner_size-800x200.jpg-nggid047739-ngg0dyn-800x200x100-00f0w010c010r110f110r010t010.jpg" alt="Recipe Image 4"></div>
+        </div>
+    </section>
+
+
+    <!-- Blog -->
+    <section id="blog" class="blog">
+        <h2>Blog</h2>
+        <div class="blog-posts">
+            <div class="blog-post">
+                <h3>5 Quick Dinner Recipes</h3>
+                <p>Check out these five quick and easy dinner recipes that are perfect for busy weeknights.</p>
+            </div>
+            <div class="blog-post">
+                <h3>Healthy Eating Tips</h3>
+                <p>Learn how to make healthier food choices and incorporate nutritious ingredients into your meals.</p>
+            </div>
+            <div class="blog-post">
+                <h3>Cooking for Beginners</h3>
+                <p>Get tips and tricks for cooking if you're just starting out. These easy recipes will help you get started.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <p>&copy; 2024 Recipe Organizer. All rights reserved. </p>
+    </footer>
+
+</body>
+</html>

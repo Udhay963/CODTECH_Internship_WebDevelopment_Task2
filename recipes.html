@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipes</title>
+    <link rel="stylesheet" href="styles2.css">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            background-image: url('https://thehealthyepicurean.com/wp-content/uploads/2020/09/Easy-Beginner-Recipes.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+        }
+        header {
+            color: #ecf0f1;
+            padding: 2em 0;
+            text-align: center;
+            border-bottom: 4px solid #3498db;
+            position: sticky; /* Make the header sticky */
+            top: 0; /* Stick to the top of the viewport */
+            background-color: #333; /* Ensure background color for readability */
+            z-index: 20; /* Ensure it stays above other content */
+        }
+        header h1 {
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            font-size: 2.5em;
+            color: #ecf0f1;
+        }
+        main {
+            padding: 2em;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .search-container {
+            text-align: center;
+            margin-bottom: 2em;
+        }
+        .search-container input[type="text"] {
+            width: 100%;
+            max-width: 600px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        .category-buttons {
+            text-align: center;
+            margin-bottom: 2em;
+        }
+        .category-buttons button {
+            background-color: #3498db;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            margin: 0 10px;
+        }
+        .category-buttons button:hover {
+            background-color: #2980b9;
+        }
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2em;
+        }
+        .category-section {
+            background-color: #fff;
+            padding: 1em;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            display: none;
+        }
+        .category-section.active {
+            display: block;
+        }
+        .category-section h2 {
+            font-size: 1.5em;
+            margin-bottom: 0.5em;
+            position: sticky;
+            top: 0;
+            background-color: #fff; /* Ensure readability */
+            z-index: 10; /* Make sure it stays above other elements */
+            border-bottom: 1px solid #ddd; /* Optional: Add a border for separation */
+        }
+        .recipe-item {
+            margin-bottom: 1em;
+        }
+        .recipe-item h3 {
+            margin-top: 0;
+        }
+        .recipe-item button {
+            background-color: #3498db;
+            color: #fff;
+            padding: 6px 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            margin-right: 5px;
+        }
+        .recipe-item button:hover {
+            background-color: #2980b9;
+        }
+        .back-button-container {
+            position: absolute;
+            left: 20px;
+        }
+        .back-button {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: #ecf0f1;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+            width: 200px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .back-button:hover {
+            background: linear-gradient(135deg, #2980b9, #3498db);
+            transform: scale(1.1);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+        .back-button:active {
+            transform: scale(0.98);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Recipes</h1>
+    </header>
+    <main>
+        <div class="back-button-container">
+            <a href="index2.html" class="back-button">Back to Add Recipe</a>
+        </div>
+        <div class="search-container">
+            <input type="text" id="search-bar" placeholder="Search by recipes/ingredients...">
+        </div>
+        <div class="category-buttons">
+            <button data-category="all">All</button>
+            <button data-category="Breakfast">Breakfast</button>
+            <button data-category="Lunch">Lunch</button>
+            <button data-category="Dinner">Dinner</button>
+            <button data-category="Snacks">Snacks</button>
+            <button data-category="Desserts">Desserts</button>
+        </div>
+        <div class="categories-grid" id="recipes-container"></div>
+    </main>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const recipesContainer = document.getElementById('recipes-container');
+            const searchBar = document.getElementById('search-bar');
+
+            // Get recipes from localStorage
+            const recipes = JSON.parse(localStorage.getItem('recipes')) || [];
+
+            // Organize recipes by category
+            const categorizedRecipes = {};
+            recipes.forEach((recipe, index) => {
+                const { category } = recipe;
+                if (!categorizedRecipes[category]) {
+                    categorizedRecipes[category] = [];
+                }
+                categorizedRecipes[category].push({ ...recipe, index });
+            });
+
+            // Create and append category sections
+            for (const category in categorizedRecipes) {
+                const section = document.createElement('div');
+                section.classList.add('category-section');
+                section.setAttribute('data-category', category);
+
+                const heading = document.createElement('h2');
+                heading.textContent = category;
+                section.appendChild(heading);
+
+                categorizedRecipes[category].forEach(recipe => {
+                    const item = document.createElement('div');
+                    item.classList.add('recipe-item');
+
+                    const title = document.createElement('h3');
+                    title.textContent = recipe.name;
+                    item.appendChild(title);
+
+                    const ingredients = document.createElement('p');
+                    ingredients.textContent = `Ingredients: ${recipe.ingredients}`;
+                    item.appendChild(ingredients);
+
+                    const steps = document.createElement('p');
+                    steps.textContent = `Steps: ${recipe.steps}`;
+                    item.appendChild(steps);
+
+                    if (recipe.notes) {
+                        const notes = document.createElement('p');
+                        notes.textContent = `Notes: ${recipe.notes}`;
+                        item.appendChild(notes);
+                    }
+
+                    // Edit button
+                    const editButton = document.createElement('button');
+                    editButton.textContent = 'Edit';
+                    editButton.addEventListener('click', function() {
+                        const recipeIndex = recipe.index;
+                        window.location.href = `edit-recipe.html?index=${recipeIndex}`;
+                    });
+                    item.appendChild(editButton);
+
+                    // Delete button
+                    const deleteButton = document.createElement('button');
+                    deleteButton.textContent = 'Delete';
+                    deleteButton.addEventListener('click', function() {
+                        const recipeIndex = recipe.index;
+                        recipes.splice(recipeIndex, 1);
+                        localStorage.setItem('recipes', JSON.stringify(recipes));
+                        item.remove();
+                    });
+                    item.appendChild(deleteButton);
+
+                    section.appendChild(item);
+                });
+
+                recipesContainer.appendChild(section);
+            }
+
+            function filterRecipes() {
+                const searchTerm = searchBar.value.toLowerCase();
+                const sections = document.querySelectorAll('.category-section');
+
+                sections.forEach(section => {
+                    let hasVisibleItems = false;
+
+                    const items = section.querySelectorAll('.recipe-item');
+                    items.forEach(item => {
+                        const title = item.querySelector('h3').textContent.toLowerCase();
+                        const ingredients = item.querySelector('p').textContent.toLowerCase();
+                        const steps = item.querySelector('p').textContent.toLowerCase();
+                        const notes = item.querySelector('p').textContent.toLowerCase();
+                        const matchesSearch = title.includes(searchTerm) || ingredients.includes(searchTerm) || steps.includes(searchTerm) || notes.includes(searchTerm);
+
+                        if (matchesSearch) {
+                            item.style.display = 'block';
+                            hasVisibleItems = true;
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+
+                    if (hasVisibleItems) {
+                        section.classList.add('active');
+                    } else {
+                        section.classList.remove('active');
+                    }
+                });
+            }
+
+            // Filter recipes on search input
+            searchBar.addEventListener('input', filterRecipes);
+
+            // Show all recipes by default
+            document.querySelector('button[data-category="all"]').addEventListener('click', () => {
+                document.querySelectorAll('.category-section').forEach(section => section.classList.add('active'));
+            });
+
+            // Show recipes by category
+            document.querySelectorAll('.category-buttons button').forEach(button => {
+                button.addEventListener('click', function() {
+                    const category = this.getAttribute('data-category');
+                    if (category === 'all') {
+                        document.querySelectorAll('.category-section').forEach(section => section.classList.add('active'));
+                    } else {
+                        document.querySelectorAll('.category-section').forEach(section => {
+                            if (section.getAttribute('data-category') === category) {
+                                section.classList.add('active');
+                            } else {
+                                section.classList.remove('active');
+                            }
+                        });
+                    }
+                });
+            });
+
+            // Initial filter
+            filterRecipes();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Recipe</title>
+    <link rel="stylesheet" href="styles2.css">
+    <style>
+        /* General Body Styling */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            background-image: url('https://img.freepik.com/premium-photo/breakfast-buffet-with-food-drinks-desserts-table-hotel-lunch-with-snacks-bakery-fruits-eggs-meat-bread-juice-tea-coffee-modern-illustration-flat-style_76964-82068.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+        }
+
+        /* Header Styling */
+        header {
+            color: #ecf0f1;
+            padding: 2em 0;
+            text-align: center;
+            border-bottom: 4px solid #3498db;
+            background: linear-gradient(135deg, #2980b9, #3498db);
+            position: relative;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        header h1 {
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            font-size: 2.5em;
+            color: #ecf0f1;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Main Section Styling */
+        main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2em;
+            max-width: 800px;
+            margin: 0 auto;
+            border-radius: 10px;
+            backdrop-filter: blur(5px);
+        }
+
+        /* Form Styling */
+        #edit-recipe-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5em;
+            padding: 2em;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+            position: relative;
+        }
+
+        #edit-recipe-form:hover {
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Label Styling */
+        label {
+            font-weight: 600;
+            margin-bottom: 0.5em;
+            font-size: 1.1em;
+            color: #34495e;
+            letter-spacing: 1px;
+        }
+
+        /* Input, Select, and Textarea Styling */
+        input, select, textarea {
+            width: 100%;
+            padding: 14px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            font-size: 1em;
+            box-sizing: border-box;
+            background-color: #f9f9f9;
+        }
+        input:focus, select:focus, textarea:focus {
+            border-color: #3498db;
+            outline: none;
+            box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+        }
+
+        /* Textarea Customization */
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        /* Success and Error Messages */
+        .success-message, .error-message {
+            padding: 1em;
+            border-radius: 5px;
+            margin-bottom: 1em;
+            font-size: 1em;
+        }
+        .success-message {
+            background-color: #dff0d8;
+            color: #3c763d;
+            display: none;
+        }
+        .error-message {
+            background-color: #f2dede;
+            color: #a94442;
+        }
+
+        /* Button Styling */
+        button {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: #ecf0f1;
+            padding: 14px 24px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1.2em;
+            font-weight: bold;
+            display: inline-block;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        button:hover {
+            background: linear-gradient(135deg, #2980b9, #3498db);
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+        button:active {
+            transform: scale(0.98);
+        }
+
+        /* View Recipes Button */
+        .view-recipes-button {
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            color: #fff;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 1.2em;
+            font-weight: bold;
+            text-decoration: none;
+            position: absolute;
+            top: 20px;
+            left: -250px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .view-recipes-button:hover {
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Container for Notes Section */
+        .notes-container {
+            display: flex;
+            flex-direction: column;
+            min-height: 80px;
+            margin-bottom: 1em;
+        }
+
+        /* Checkbox and Label Row */
+        .notes-row {
+            display: flex;
+            align-items: center;
+        }
+
+        .notes-row input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+
+        /* Textarea for Notes */
+        #notes-textarea {
+            display: none;
+            margin-top: 10px;
+            resize: vertical;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Edit Recipe</h1>
+    </header>
+    <main>
+        <a href="recipes.html" class="view-recipes-button">Back to Recipes</a>
+        <section id="edit-recipe-form">
+            <form id="edit-form">
+                <!-- Form fields similar to add recipe form -->
+                <label for="recipe-name">Recipe Name</label>
+                <input type="text" id="recipe-name" name="recipe-name" required>
+                
+                <label for="category">Category</label>
+                <select id="category" name="category" required>
+                    <option value="Breakfast">Breakfast</option>
+                    <option value="Lunch">Lunch</option>
+                    <option value="Dinner">Dinner</option>
+                    <option value="Snacks">Snacks</option>
+                    <option value="Desserts">Desserts</option>
+                </select>
+                
+                <label for="ingredients">Ingredients</label>
+                <textarea id="ingredients" name="ingredients" required></textarea>
+                
+                <label for="steps">Steps</label>
+                <textarea id="steps" name="steps" required></textarea>
+                
+                <label for="notes">Notes</label>
+                <textarea id="notes" name="notes"></textarea>
+                
+                <button type="submit">Save Changes</button>
+            </form>
+        </section>
+    </main>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const index = urlParams.get('index');
+            
+            if (index === null) {
+                // Handle error or redirect
+                return;
+            }
+
+            const recipes = JSON.parse(localStorage.getItem('recipes')) || [];
+            const recipeToEdit = recipes[index];
+            
+            if (!recipeToEdit) {
+                // Handle error or redirect
+                return;
+            }
+
+            document.getElementById('recipe-name').value = recipeToEdit.name;
+            document.getElementById('category').value = recipeToEdit.category;
+            document.getElementById('ingredients').value = recipeToEdit.ingredients;
+            document.getElementById('steps').value = recipeToEdit.steps;
+            document.getElementById('notes').value = recipeToEdit.notes || '';
+
+            document.getElementById('edit-form').addEventListener('submit', function(event) {
+                event.preventDefault();
+
+                recipeToEdit.name = document.getElementById('recipe-name').value;
+                recipeToEdit.category = document.getElementById('category').value;
+                recipeToEdit.ingredients = document.getElementById('ingredients').value;
+                recipeToEdit.steps = document.getElementById('steps').value;
+                recipeToEdit.notes = document.getElementById('notes').value;
+
+                recipes[index] = recipeToEdit;
+                localStorage.setItem('recipes', JSON.stringify(recipes));
+
+                // Display a success message or notify user that changes are saved
+                alert('Changes saved successfully!');
+            });
+        });
+    </script>
+</body>
+</html>
